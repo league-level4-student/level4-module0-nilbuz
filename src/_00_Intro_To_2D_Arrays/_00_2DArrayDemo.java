@@ -4,7 +4,7 @@ public class _00_2DArrayDemo {
 	public static void main(String[] args) {
 		// A two-dimensional array is simply an array of arrays.
 		// The syntax for a two dimensional array is two square brackets [][]
-		
+
 		// array2d is an array of an array of ints. Or a 2D array.
 		int[][] array2d;
 		

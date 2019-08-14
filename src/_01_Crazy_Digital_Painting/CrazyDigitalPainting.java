@@ -12,16 +12,16 @@ public class CrazyDigitalPainting {
 	// java.awt.Color. Initialize the size of the array using the
 	// integers created in step 1.
 
-	Color[][] array = new Color[1000][1000];
+	Color[][] array2d = new Color[WIDTH][HEIGHT];
 
 	public CrazyDigitalPainting() {
 		// 3. Open the crazy_digital_painting.png file and look at the image.
 
-		for (int i = 0; i < array.length; i++) {
-			for (int j = 0; j < array[i].length; j++) {
-
-				array[i][j] = new Color(i*256, i%256, j * i, j * 256);
+		for (int i = 0; i < array2d.length; i++) {
+			for (int j = 0; j < array2d[i].length; j++) {
 				
+				//array2d[i][j] = new Color(j / 2 % 256, i / 2 % 256, (i * j) % 256);
+				array2d[i][j] = new Color((i * j) % 256, (i * j) % 256, (i * j) % 256);
 			}
 		}
 
@@ -34,6 +34,9 @@ public class CrazyDigitalPainting {
 
 		// 6. Use the ColorArrayDisplayer class to call the displayColorsAsImage method
 		// to show off your picture.
+
+		ColorArrayDisplayer.displayColorsAsImage(array2d);
+
 	}
 
 	public static void main(String[] args) {
