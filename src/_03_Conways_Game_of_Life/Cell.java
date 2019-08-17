@@ -32,15 +32,15 @@ public class Cell implements Drawable {
 		if (numNeighbors < 2) {
 			isAlive = false;
 		}
-		
+
 		if (numNeighbors == 2 || numNeighbors == 3) {
 			isAlive = true;
 		}
-		
+
 		if (numNeighbors > 3) {
 			isAlive = false;
 		}
-		
+
 		if (!isAlive) {
 			if (numNeighbors == 3) {
 				isAlive = true;
@@ -61,6 +61,14 @@ public class Cell implements Drawable {
 	// draws empty square if cell is dead
 	@Override
 	public void draw(Graphics g) {
+
+		if (isAlive) {
+			g.setColor(Color.BLACK);
+			g.fillRect(x, y, cellSize, cellSize);
+		} else {
+			//g.setColor(Color.WHITE);
+			//g.fillRect(x, y, cellSize, cellSize);
+		}
 
 	}
 }
