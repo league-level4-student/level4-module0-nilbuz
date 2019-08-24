@@ -23,6 +23,8 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 	Cell[][] cells;
 
+	int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
+
 	public WorldPanel(int w, int h, int cpr) {
 		setPreferredSize(new Dimension(w, h));
 		addMouseListener(this);
@@ -31,7 +33,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 		// 2. Calculate the cell size.
 
-		int cellSize = w / cpr;
+		int cellSize = w / cellsPerRow;
 
 		// 3. Initialize the cell array to the appropriate size.
 
@@ -108,8 +110,8 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 				cells[i][j].draw(g);
 
-				// g.setColor(Color.BLACK);
-				// g.drawRect(cells[i][j].getX(), cells[i][j].getY(), cellSize, cellSize);
+				g.setColor(Color.BLACK);
+				g.drawRect(cells[i][j].getX(), cells[i][j].getY(), cellSize, cellSize);
 			}
 		}
 
@@ -120,22 +122,21 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// 7. iterate through cells and fill in the livingNeighbors array
 		// . using the getLivingNeighbors method.
 
-//		int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
-//
-//		for (int i = 0; i < cells.length; i++) {
-//			for (int j = 0; j < cells[i].length; j++) {
-//
-//				
-//
-//			}
-//		}
+		for (int i = 0; i < livingNeighbors.length; i++) {
+			for (int j = 0; j < livingNeighbors[i].length; j++) {
+
+				livingNeighbors[i][j] = getLivingNeighbors(i, j);
+
+			}
+		}
 
 		// 8. check if each cell should live or die
 
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[i].length; j++) {
 
-				cells[i][j].liveOrDie(getLivingNeighbors(cells[i][j].getX(), cells[i][j].getY()));
+				System.out.println("(" + i + "," + j + ")");
+				cells[i][j].liveOrDie(getLivingNeighbors(i, j));
 
 			}
 		}
@@ -149,18 +150,170 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	// cell identified by x and y
 	public int getLivingNeighbors(int x, int y) {
 
+		System.out.println("asdfasdf");
+
 		int numNeighbors = 0;
 
-		for (int i = 0; i < cells.length; i++) {
-			for (int j = 0; j < cells[i].length; j++) {
+//		if (x == 0 && y == 0) {
+//
+//			if (cells[x + 1][y].isAlive) {
+//				numNeighbors++;
+//			}
+//			if (cells[x][y + 1].isAlive) {
+//				numNeighbors++;
+//			}
+//			if (cells[x + 1][y + 1].isAlive) {
+//				numNeighbors++;
+//			}
+//
+//		} else {
+//
+//			if (x == cellsPerRow && y == cellsPerRow) {
+//
+//				if (cells[x - 1][y].isAlive) {
+//					numNeighbors++;
+//				}
+//				if (cells[x][y - 1].isAlive) {
+//					numNeighbors++;
+//				}
+//				if (cells[x - 1][y - 1].isAlive) {
+//					numNeighbors++;
+//				}
+//
+//			} else {
+//				if (x == cellsPerRow && y == 0) {
+//					if (cells[x - 1][y].isAlive) {
+//						numNeighbors++;
+//					}
+//					if (cells[x][y + 1].isAlive) {
+//						numNeighbors++;
+//					}
+//					if (cells[x - 1][y + 1].isAlive) {
+//						numNeighbors++;
+//					} else {
+//
+//						if (x == 0 && y == cellsPerRow) {
+//							if (cells[x + 1][y].isAlive) {
+//								numNeighbors++;
+//							}
+//							if (cells[x][y - 1].isAlive) {
+//								numNeighbors++;
+//							}
+//							if (cells[x + 1][y - 1].isAlive) {
+//								numNeighbors++;
+//							}
+//						} else {
+//
+//							if (x == 0) {
+//
+//								if (cells[x][y - 1].isAlive) {
+//									numNeighbors++;
+//								}
+//								if (cells[x][y + 1].isAlive) {
+//									numNeighbors++;
+//								}
+//								if (cells[x + 1][y].isAlive) {
+//									numNeighbors++;
+//								}
+//								if (cells[x + 1][y - 1].isAlive) {
+//									numNeighbors++;
+//								}
+//								if (cells[x + 1][y + 1].isAlive) {
+//									numNeighbors++;
+//								}
+//							} else {
+//								if (y == 0) {
+//
+//									if (cells[x - 1][y].isAlive) {
+//										numNeighbors++;
+//									}
+//									if (cells[x + 1][y].isAlive) {
+//										numNeighbors++;
+//									}
+//									if (cells[x - 1][y + 1].isAlive) {
+//										numNeighbors++;
+//									}
+//									if (cells[x + 1][y + 1].isAlive) {
+//										numNeighbors++;
+//									}
+//									if (cells[x][y + 1].isAlive) {
+//										numNeighbors++;
+//									}
+//								} else {
+//
+//									if (x == cellsPerRow) {
+//
+//										if (cells[x][y - 1].isAlive) {
+//											numNeighbors++;
+//										}
+//										if (cells[x][y + 1].isAlive) {
+//											numNeighbors++;
+//										}
+//										if (cells[x - 1][y].isAlive) {
+//											numNeighbors++;
+//										}
+//										if (cells[x - 1][y - 1].isAlive) {
+//											numNeighbors++;
+//										}
+//										if (cells[x - 1][y + 1].isAlive) {
+//											numNeighbors++;
+//										}
+//									} else {
+//
+//										if (y == cellsPerRow) {
+//
+//											if (cells[x - 1][y].isAlive) {
+//												numNeighbors++;
+//											}
+//											if (cells[x + 1][y].isAlive) {
+//												numNeighbors++;
+//											}
+//											if (cells[x - 1][y - 1].isAlive) {
+//												numNeighbors++;
+//											}
+//											if (cells[x + 1][y - 1].isAlive) {
+//												numNeighbors++;
+//											}
+//											if (cells[x][y - 1].isAlive) {
+//												numNeighbors++;
+//											}
+//
+//											if (cells[x + 1][y].isAlive) {
+//												numNeighbors++;
+//											}
+//											if (cells[x][y + 1].isAlive) {
+//												numNeighbors++;
+//											}
+//											if (cells[x + 1][y + 1].isAlive) {
+//												numNeighbors++;
+//											}
+//											if (cells[x - 1][y].isAlive) {
+//												numNeighbors++;
+//											}
+//											if (cells[x][y - 1].isAlive) {
+//												numNeighbors++;
+//											}
+//											if (cells[x - 1][y - 1].isAlive) {
+//												numNeighbors++;
+//											}
+//											if (cells[x + 1][y - 1].isAlive) {
+//												numNeighbors++;
+//											}
+//											if (cells[x - 1][y + 1].isAlive) {
+//												numNeighbors++;
+//											}
+//										}
+//									}
+//								}
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
 
-				
-				
-			}
-		}
-		System.out.println(numNeighbors);
-		System.out.println("asdf");
 		return numNeighbors;
+
 	}
 
 	@Override
@@ -188,14 +341,14 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[i].length; j++) {
-				
-				if (e.getX() > cells[i][j].getX() && e.getX() < cells[i][j].getX() + cellSize && e.getY() > cells[i][j].getX()
-						&& e.getY() < cells[i][j].getY() + cellSize) {
+
+				if (e.getX() > cells[i][j].getX() && e.getX() < cells[i][j].getX() + cellSize
+						&& e.getY() > cells[i][j].getY() && e.getY() < cells[i][j].getY() + cellSize) {
 
 					cells[i][j].isAlive = !cells[i][j].isAlive;
-					
+
 				}
-				
+
 			}
 		}
 
