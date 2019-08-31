@@ -33,7 +33,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 		// 2. Calculate the cell size.
 
-		int cellSize = w / cellsPerRow;
+		int cellSize = ConwaysGameOfLife.WIDTH / cellsPerRow;
 
 		// 3. Initialize the cell array to the appropriate size.
 
@@ -108,6 +108,7 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[i].length; j++) {
 
+				g.setColor(Color.blue);
 				cells[i][j].draw(g);
 
 				g.setColor(Color.BLACK);
@@ -122,20 +123,12 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// 7. iterate through cells and fill in the livingNeighbors array
 		// . using the getLivingNeighbors method.
 
-		for (int i = 0; i < livingNeighbors.length; i++) {
-			for (int j = 0; j < livingNeighbors[i].length; j++) {
-
-				livingNeighbors[i][j] = getLivingNeighbors(i, j);
-
-			}
-		}
 
 		// 8. check if each cell should live or die
 
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[i].length; j++) {
 
-				System.out.println("(" + i + "," + j + ")");
 				cells[i][j].liveOrDie(getLivingNeighbors(i, j));
 
 			}
@@ -150,168 +143,75 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	// cell identified by x and y
 	public int getLivingNeighbors(int x, int y) {
 
-		System.out.println("asdfasdf");
-
+		System.out.println(x + " " + y);
+		
 		int numNeighbors = 0;
 
-//		if (x == 0 && y == 0) {
-//
-//			if (cells[x + 1][y].isAlive) {
-//				numNeighbors++;
-//			}
-//			if (cells[x][y + 1].isAlive) {
-//				numNeighbors++;
-//			}
-//			if (cells[x + 1][y + 1].isAlive) {
-//				numNeighbors++;
-//			}
-//
-//		} else {
-//
-//			if (x == cellsPerRow && y == cellsPerRow) {
-//
-//				if (cells[x - 1][y].isAlive) {
-//					numNeighbors++;
-//				}
-//				if (cells[x][y - 1].isAlive) {
-//					numNeighbors++;
-//				}
-//				if (cells[x - 1][y - 1].isAlive) {
-//					numNeighbors++;
-//				}
-//
-//			} else {
-//				if (x == cellsPerRow && y == 0) {
-//					if (cells[x - 1][y].isAlive) {
-//						numNeighbors++;
-//					}
-//					if (cells[x][y + 1].isAlive) {
-//						numNeighbors++;
-//					}
-//					if (cells[x - 1][y + 1].isAlive) {
-//						numNeighbors++;
-//					} else {
-//
-//						if (x == 0 && y == cellsPerRow) {
-//							if (cells[x + 1][y].isAlive) {
-//								numNeighbors++;
-//							}
-//							if (cells[x][y - 1].isAlive) {
-//								numNeighbors++;
-//							}
-//							if (cells[x + 1][y - 1].isAlive) {
-//								numNeighbors++;
-//							}
-//						} else {
-//
-//							if (x == 0) {
-//
-//								if (cells[x][y - 1].isAlive) {
-//									numNeighbors++;
-//								}
-//								if (cells[x][y + 1].isAlive) {
-//									numNeighbors++;
-//								}
-//								if (cells[x + 1][y].isAlive) {
-//									numNeighbors++;
-//								}
-//								if (cells[x + 1][y - 1].isAlive) {
-//									numNeighbors++;
-//								}
-//								if (cells[x + 1][y + 1].isAlive) {
-//									numNeighbors++;
-//								}
-//							} else {
-//								if (y == 0) {
-//
-//									if (cells[x - 1][y].isAlive) {
-//										numNeighbors++;
-//									}
-//									if (cells[x + 1][y].isAlive) {
-//										numNeighbors++;
-//									}
-//									if (cells[x - 1][y + 1].isAlive) {
-//										numNeighbors++;
-//									}
-//									if (cells[x + 1][y + 1].isAlive) {
-//										numNeighbors++;
-//									}
-//									if (cells[x][y + 1].isAlive) {
-//										numNeighbors++;
-//									}
-//								} else {
-//
-//									if (x == cellsPerRow) {
-//
-//										if (cells[x][y - 1].isAlive) {
-//											numNeighbors++;
-//										}
-//										if (cells[x][y + 1].isAlive) {
-//											numNeighbors++;
-//										}
-//										if (cells[x - 1][y].isAlive) {
-//											numNeighbors++;
-//										}
-//										if (cells[x - 1][y - 1].isAlive) {
-//											numNeighbors++;
-//										}
-//										if (cells[x - 1][y + 1].isAlive) {
-//											numNeighbors++;
-//										}
-//									} else {
-//
-//										if (y == cellsPerRow) {
-//
-//											if (cells[x - 1][y].isAlive) {
-//												numNeighbors++;
-//											}
-//											if (cells[x + 1][y].isAlive) {
-//												numNeighbors++;
-//											}
-//											if (cells[x - 1][y - 1].isAlive) {
-//												numNeighbors++;
-//											}
-//											if (cells[x + 1][y - 1].isAlive) {
-//												numNeighbors++;
-//											}
-//											if (cells[x][y - 1].isAlive) {
-//												numNeighbors++;
-//											}
-//
-//											if (cells[x + 1][y].isAlive) {
-//												numNeighbors++;
-//											}
-//											if (cells[x][y + 1].isAlive) {
-//												numNeighbors++;
-//											}
-//											if (cells[x + 1][y + 1].isAlive) {
-//												numNeighbors++;
-//											}
-//											if (cells[x - 1][y].isAlive) {
-//												numNeighbors++;
-//											}
-//											if (cells[x][y - 1].isAlive) {
-//												numNeighbors++;
-//											}
-//											if (cells[x - 1][y - 1].isAlive) {
-//												numNeighbors++;
-//											}
-//											if (cells[x + 1][y - 1].isAlive) {
-//												numNeighbors++;
-//											}
-//											if (cells[x - 1][y + 1].isAlive) {
-//												numNeighbors++;
-//											}
-//										}
-//									}
-//								}
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
+		if (x - 1 >= 0) {
 
+			if (cells[x - 1][y].isAlive) {
+				numNeighbors++;
+				System.out.println("-x");
+			}
+		}
+
+		if (x + 1 <= cellsPerRow - 1) {
+
+			if (cells[x + 1][y].isAlive) {
+				numNeighbors++;
+				System.out.println("+x");
+			}
+		}
+
+		if (y - 1 >= 0) {
+
+			if (cells[x][y - 1].isAlive) {
+				numNeighbors++;
+				System.out.println("-y");
+			}
+		}
+
+		if (y + 1 <= cellsPerRow - 1) {
+
+			if (cells[x][y + 1].isAlive) {
+				numNeighbors++;
+				System.out.println("+y");
+			}
+		}
+
+		if (x + 1 <= cellsPerRow - 1 && y + 1 <= +cellsPerRow - 1) {
+
+			if (cells[x + 1][y + 1].isAlive) {
+				numNeighbors++;
+				System.out.println("+x +y");
+			}
+		}
+
+		if (x + 1 <= cellsPerRow - 1 && y - 1 >= +0) {
+
+			if (cells[x + 1][y - 1].isAlive) {
+				numNeighbors++;
+				System.out.println("+x -y");
+			}
+		}
+
+		if (x - 1 >= 0 && y + 1 <= +cellsPerRow - 1) {
+
+			if (cells[x - 1][y + 1].isAlive) {
+				numNeighbors++;
+				System.out.println("-x +y");
+			}
+		}
+
+		if (x - 1 >= 0 && y - 1 >= 0) {
+
+			if (cells[x - 1][y - 1].isAlive) {
+				numNeighbors++;
+				System.out.println("-x -y");
+			}
+		}
+		System.out.println(numNeighbors);
+		System.out.println();
 		return numNeighbors;
 
 	}
@@ -339,6 +239,11 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// which cell is clicked. Then toggle
 		// the isAlive variable for that cell.
 
+		cellSize = ConwaysGameOfLife.WIDTH / cellsPerRow;
+//		System.out.println("asdf");
+//		System.out.println("mouse" + e.getX() + " " + e.getY());
+//		System.out.println("cell" + cells[3][3].getX() + " " + cells[3][3].getY());
+
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[i].length; j++) {
 
@@ -348,7 +253,6 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 					cells[i][j].isAlive = !cells[i][j].isAlive;
 
 				}
-
 			}
 		}
 
