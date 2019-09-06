@@ -26,6 +26,7 @@ public class MazeMaker{
 		
 		//5. call selectNextPath method with the randomly selected cell
 		
+		selectNextPath(maze.cells[randGen.nextInt(maze.cells.length)][randGen.nextInt(maze.cells.length)]);
 		
 		return maze;
 	}
@@ -34,7 +35,65 @@ public class MazeMaker{
 	private static void selectNextPath(Cell currentCell) {
 		//A. mark cell as visited
 
+		currentCell.setBeenVisited(true);
+		
 		//B. check for unvisited neighbors using the cell
+		
+		if (currentCell.getX() - 1 >= 0) {
+
+			if (maze.cells[x - 1][y].isAlive) {
+				numNeighbors++;
+			}
+		}
+
+		if (currentCell.getX() + 1 <= cellsPerRow - 1) {
+
+			if (maze.cells[x + 1][y].isAlive) {
+				numNeighbors++;
+			}
+		}
+
+		if (y - 1 >= 0) {
+
+			if (maze.cells[x][y - 1].isAlive) {
+				numNeighbors++;
+			}
+		}
+
+		if (y + 1 <= cellsPerRow - 1) {
+
+			if (maze.cells[x][y + 1].isAlive) {
+				numNeighbors++;
+			}
+		}
+
+		if (currentCell.getX() + 1 <= cellsPerRow - 1 && currentCell.getY() + 1 <= +cellsPerRow - 1) {
+
+			if (maze.cells[x + 1][y + 1].isAlive) {
+				numNeighbors++;
+			}
+		}
+
+		if (currentCell.getX() + 1 <= cellsPerRow - 1 && currentCell.getY() - 1 >= +0) {
+
+			if (maze.cells[x + 1][y - 1].isAlive) {
+				numNeighbors++;
+			}
+		}
+
+		if (currentCell.getX() - 1 >= 0 && currentCell.getY() + 1 <= +cellsPerRow - 1) {
+
+			if (maze.cells[x - 1][y + 1].isAlive) {
+				numNeighbors++;
+			}
+		}
+
+		if (currentCell.getX() - 1 >= 0 && currentCell.getY() - 1 >= 0) {
+
+			if (maze.cells[x - 1][y - 1].isAlive) {
+				numNeighbors++;
+			}
+		}
 		
 		//C. if has unvisited neighbors,
 		

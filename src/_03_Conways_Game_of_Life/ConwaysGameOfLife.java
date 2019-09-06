@@ -66,6 +66,8 @@ public class ConwaysGameOfLife extends JPanel implements ActionListener{
 		window.setResizable(false);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setVisible(true);
+		
+		gamePanel.repaint();
 	}
 	boolean run = false;
 	@Override

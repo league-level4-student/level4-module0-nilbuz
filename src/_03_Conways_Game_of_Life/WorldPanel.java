@@ -22,14 +22,14 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	// 1. Create a 2D array of Cells. Do not initialize it.
 
 	Cell[][] cells;
-
-	int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
+	int[][] livingNeighbors;
 
 	public WorldPanel(int w, int h, int cpr) {
 		setPreferredSize(new Dimension(w, h));
 		addMouseListener(this);
 		timer = new Timer(500, this);
 		this.cellsPerRow = cpr;
+		livingNeighbors = new int[cellsPerRow][cellsPerRow];
 
 		// 2. Calculate the cell size.
 
@@ -50,7 +50,6 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 			}
 		}
-
 	}
 
 	public void randomizeCells() {
@@ -105,17 +104,18 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	public void paintComponent(Graphics g) {
 		// 6. Iterate through the cells and draw them all
 
+		
+		
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[i].length; j++) {
 
 				g.setColor(Color.blue);
 				cells[i][j].draw(g);
 
-				g.setColor(Color.BLACK);
-				g.drawRect(cells[i][j].getX(), cells[i][j].getY(), cellSize, cellSize);
 			}
 		}
 
+		
 	}
 
 	// advances world one step
@@ -123,13 +123,20 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// 7. iterate through cells and fill in the livingNeighbors array
 		// . using the getLivingNeighbors method.
 
+		for (int i = 0; i < livingNeighbors.length; i++) {
+			for (int j = 0; j < livingNeighbors[i].length; j++) {
+
+				livingNeighbors[i][j] = getLivingNeighbors(i, j);
+
+			}
+		}
 
 		// 8. check if each cell should live or die
 
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[i].length; j++) {
 
-				cells[i][j].liveOrDie(getLivingNeighbors(i, j));
+				cells[i][j].liveOrDie(livingNeighbors[i][j]);
 
 			}
 		}
@@ -143,15 +150,12 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	// cell identified by x and y
 	public int getLivingNeighbors(int x, int y) {
 
-		System.out.println(x + " " + y);
-		
 		int numNeighbors = 0;
 
 		if (x - 1 >= 0) {
 
 			if (cells[x - 1][y].isAlive) {
 				numNeighbors++;
-				System.out.println("-x");
 			}
 		}
 
@@ -159,7 +163,6 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 			if (cells[x + 1][y].isAlive) {
 				numNeighbors++;
-				System.out.println("+x");
 			}
 		}
 
@@ -167,7 +170,6 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 			if (cells[x][y - 1].isAlive) {
 				numNeighbors++;
-				System.out.println("-y");
 			}
 		}
 
@@ -175,7 +177,6 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 			if (cells[x][y + 1].isAlive) {
 				numNeighbors++;
-				System.out.println("+y");
 			}
 		}
 
@@ -183,7 +184,6 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 			if (cells[x + 1][y + 1].isAlive) {
 				numNeighbors++;
-				System.out.println("+x +y");
 			}
 		}
 
@@ -191,7 +191,6 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 			if (cells[x + 1][y - 1].isAlive) {
 				numNeighbors++;
-				System.out.println("+x -y");
 			}
 		}
 
@@ -199,7 +198,6 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 			if (cells[x - 1][y + 1].isAlive) {
 				numNeighbors++;
-				System.out.println("-x +y");
 			}
 		}
 
@@ -207,11 +205,9 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 
 			if (cells[x - 1][y - 1].isAlive) {
 				numNeighbors++;
-				System.out.println("-x -y");
 			}
 		}
-		System.out.println(numNeighbors);
-		System.out.println();
+
 		return numNeighbors;
 
 	}
@@ -240,9 +236,6 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		// the isAlive variable for that cell.
 
 		cellSize = ConwaysGameOfLife.WIDTH / cellsPerRow;
-//		System.out.println("asdf");
-//		System.out.println("mouse" + e.getX() + " " + e.getY());
-//		System.out.println("cell" + cells[3][3].getX() + " " + cells[3][3].getY());
 
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[i].length; j++) {
